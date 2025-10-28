@@ -2,10 +2,10 @@
 
 module alu_tb;
 
-	reg [0:47] a, b;
-	reg [0:3] control;
+	reg signed [47:0] a, b;
+	reg [3:0] control;
 	reg clk;
-	wire [0:47] result;
+	wire signed [47:0] result;
 	wire zero;
 
 	alu dut(
@@ -29,13 +29,30 @@ module alu_tb;
 
 
 	initial begin
-		$monitor("%t, A = %b, B = %b, control = %b, result = %b, zero = %b", $time, a, b, control, result, zero);
-		a <= 'hffffffffffff;
-		b <= 'hffffffffffff;
-		control <= 4'h0;
-		#10
-		a <= 48'h0;
-		#10;
+		$monitor("%t, A = %d, B = %d, control = %h, result = %d, zero = %b", $time, a, b, control, result, zero);
+		a = 48'hAAAA_AAAA_AAAA; b = 48'h5555_5555_5555; control = 4'h0;
+    #10;
+
+    // OR test
+    a = 48'h0; b = 48'hFFFF_FFFF_FFFF; control = 4'h1;
+    #10;
+
+    // ADD test
+    a = 48'h1; b = 48'h1; control = 4'h2;
+    #10;
+
+    // SUB test
+    a = 48'd10; b = 48'd5; control = 4'h6;
+    #10;
+
+    // SLT test
+    a = 48'd3; b = 48'd5; control = 4'h7;
+    #10;
+
+    // NOR test
+    a = 48'hAAAA_AAAA_AAAA; b = 48'h5555_5555_5555; control = 4'hC;
+    #10;
+		$finish;
 
 	end
 
