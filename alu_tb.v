@@ -29,29 +29,53 @@ module alu_tb;
 
 
 	initial begin
-		$monitor("%t, A = %d, B = %d, control = %h, result = %d, zero = %b", $time, a, b, control, result, zero);
+		$monitor("A = %d, B = %d, control = %h, result = %d, zero = %b", a, b, control, result, zero);
 		a = 48'hAAAA_AAAA_AAAA; b = 48'h5555_5555_5555; control = 4'h0;
-    #10;
+		#10;
 
-    // OR test
-    a = 48'h0; b = 48'hFFFF_FFFF_FFFF; control = 4'h1;
-    #10;
+		// OR test
+		a = 48'h0; b = 48'hFFFF_FFFF_FFFF; control = 4'h1;
+		#10;
+		a = 48'h5555_5555_5555; b = 48'hAAAA_AAAA_AAAA;
+		#10;
+		a = 48'hFFFF_FFFF_FFFF; b = 48'hFFFF_FFFF_FFFF; 
+		#10;
 
-    // ADD test
-    a = 48'h1; b = 48'h1; control = 4'h2;
-    #10;
+		// ADD test
+		a = 48'h1; b = 48'h1; control = 4'h2;
+		#10;
+		a = 48'h0; b = 48'hFFFF_FFFF_FFFF;
+		#10;
+		a = 48'h5555_5555_5555; b = 48'hAAAA_AAAA_AAAA;
+		#10;
+		a = 48'hFFFF_FFFF_FFFF; b = 48'hFFFF_FFFF_FFFF; 
+		#10;
+		a = -48'd16; b = 48'd16;
+		#10;
+		a = -48'd10; b = -48'd5;
 
-    // SUB test
-    a = 48'd10; b = 48'd5; control = 4'h6;
-    #10;
+		// SUB test
+		a = 48'd10; b = 48'd5; control = 4'h6;
+		#10;
+		a = 48'h1; b = 48'h1;
+		#10;
+		a = 48'h0; b = 48'hFFFF_FFFF_FFFF;
+		#10;
+		a = 48'h5555_5555_5555; b = 48'hAAAA_AAAA_AAAA;
+		#10;
+		a = 48'hFFFF_FFFF_FFFF; b = 48'hFFFF_FFFF_FFFF; 
+		#10;
+		a = -48'd16; b = 48'd16;
+		#10;
+		a = -48'd10; b = -48'd5;
 
-    // SLT test
-    a = 48'd3; b = 48'd5; control = 4'h7;
-    #10;
+		// SLT test
+		a = 48'd3; b = 48'd5; control = 4'h7;
+		#10;
 
-    // NOR test
-    a = 48'hAAAA_AAAA_AAAA; b = 48'h5555_5555_5555; control = 4'hC;
-    #10;
+		// NOR test
+		a = 48'hAAAA_AAAA_AAAA; b = 48'h5555_5555_5555; control = 4'hC;
+		#10;
 		$finish;
 
 	end
