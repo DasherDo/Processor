@@ -2,13 +2,12 @@ module alu (
 	input signed [47:0] a,
 	input signed [47:0] b,
 	input [3:0] control,
-	input wire clk,
 
 	output reg signed [47:0] result,
 	output zero
 );
 
-	always @(posedge clk) begin
+	always @(*) begin
 		if (control == 4'h0)  					// and
 			result <= a & b;
 		else if (control == 4'h1)
