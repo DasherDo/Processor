@@ -1,9 +1,9 @@
 module alu (
-	input signed [47:0] a,
-	input signed [47:0] b,
-	input [3:0] control,
+	input signed [0:47] a,
+	input signed [0:47] b,
+	input [0:3] control,
 
-	output reg signed [47:0] result,
+	output reg signed [0:47] result,
 	output zero
 );
 

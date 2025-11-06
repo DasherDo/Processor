@@ -2,10 +2,10 @@
 
 module instruction_fields_tb;
 
-	reg [23:0] instruction;
-	wire [1:0] Rd, Rs, Rt;
-	wire [5:0] op;
-	wire [11:0] immediate;
+	reg [0:23] instruction;
+	wire [0:1] Rd, Rs, Rt;
+	wire [0:5] op;
+	wire [0:11] immediate;
 
 	instruction_fields dut(
 		.instruction(instruction),

@@ -1,8 +1,8 @@
 module instruction_fields(
-	input [23:0]	instruction,
-	output [1:0]	Rd, Rs, Rt,
-	output [11:0]	immediate,
-	output [5:0]	op
+	input [0:23]	instruction,
+	output [0:1]	Rd, Rs, Rt,
+	output [0:11]	immediate,
+	output [0:5]	op
 );
 
 	/*
@@ -24,10 +24,10 @@ module instruction_fields(
 		Immediate
 
 	*/
-	assign op = instruction[23:18];
-	assign Rs = instruction[17:16];
-	assign Rt = instruction[15:14];
-	assign Rd = instruction[13:12];
-	assign immediate = instruction[11:0];
+	assign op = instruction[18:23];
+	assign Rs = instruction[16:17];
+	assign Rt = instruction[14:15];
+	assign Rd = instruction[12:13];
+	assign immediate = instruction[0:11];
 
 endmodule

@@ -2,9 +2,9 @@
 
 module alu_tb;
 
-	reg signed [47:0] a, b;
-	reg [3:0] control;
-	wire signed [47:0] result;
+	reg signed [0:47] a, b;
+	reg [0:3] control;
+	wire signed [0:47] result;
 	wire zero;
 
 	alu dut(

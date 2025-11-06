@@ -1,14 +1,14 @@
 module control (
 	input clk, reset,
-	input [5:0] op,
+	input [0:5] op,
 
 	output reg memread, memwrite, alusrca, memtoreg, iord, regwrite, regdest,
 	output pcen,
-	output reg [1:0] pcsource, alusrcb, aluop,
-	output reg [3:0] iwrite
+	output reg [0:1] pcsource, alusrcb, aluop,
+	output reg [0:3] iwrite
 );
 
-	reg [3:0] state, nextstate;
+	reg [0:3] state, nextstate;
 
 	initial begin
 		memread <= (state == 4'b0000 || state == 4'b0011) ? 1 : 0;

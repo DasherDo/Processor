@@ -3,10 +3,10 @@
 module register_file_tb;
 
 	reg clk, write_en;
-	reg [1:0] read_adr_a, read_adr_b, write_adr;
-	reg [47:0] write_data;
+	reg [0:1] read_adr_a, read_adr_b, write_adr;
+	reg [0:47] write_data;
 
-	wire [47:0] reg_a, reg_b;
+	wire [0:47] reg_a, reg_b;
 
 	register_file dut(
 		.clk(clk),
