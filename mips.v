@@ -16,11 +16,11 @@ module mips(
 	wire zero, alusrca, memtoreg, iord, pcen, regwrite, regdst;
 	wire [0:1] pcsource, alusrcb;
 	wire [0:3] aluop, iwrite;
-	wire [0:47] rega, regb, aluresult;
+	wire [0:47] rega, regb, aluresult, alu_mux_a, alu_mux_b;
 
 	wire [0:11] pc = 12'h800;
-	wire [0:1] Rd, Rs1, Rs2;
-	wire [0:11] immediate;
+	wire [0:1] Rd, Rs1, Rs2, write_reg_adr;
+	wire [0:11] immediate, memadr;
 	wire [0:5] op;
 
 	instruction_fields instruction(
@@ -51,8 +51,8 @@ module mips(
 	);
 
 	alu alu(
-		.a(rega),
-		.b(regb),
+		.a(alu_mux_a),
+		.b(alu_mux_b),
 		.control(aluop),
 		.result(aluresult),
 		.zero(zero)
@@ -60,7 +60,7 @@ module mips(
 
 	memory mem(
 		.clk(clk),
-		.adr(immediate),
+		.adr(memadr),
 		.write_data(aluresult),
 		.output_word(rega)
 	);
@@ -68,18 +68,46 @@ module mips(
 	register_file regfile(
 		.read_adr_a(Rs1),
 		.read_adr_b(Rs2),
-		.write_adr(Rd),
+		.write_adr(write_reg_adr),
 		.write_data(aluresult),
-		.write_en(),
+		.write_en(regwrite),
 		.clk(clk),
 		.reg_a(rega),
 		.reg_b(regb)
 	);
 
+	mux2x1 memmux(
+		.select(iord),
+		.in0(pc),
+		.in1(aluresult),
+		.out()
+	);
+
 	mux2x1 regmux(
 		.select(regdst),
-		.in0()
-	)
+		.in0(Rs1),
+		.in1(Rs2),
+		.out(write_reg_adr)
+	);
+
+	mux2x1 alu_a(
+		.select(alusrca),
+		.in0(pc),
+		.in1(rega),
+		.out(alu_mux_a)
+	);
+
+	mux4x1 alu_b(
+		.select(alusrcb),
+		.in0(regb),
+		.in1(48'h4),
+		.in2(),
+		.in3(),
+		.out(alu_mux_b)
+		);
+
+	
+
 
 
 endmodule
